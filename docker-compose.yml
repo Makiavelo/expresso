@@ -11,6 +11,8 @@ services:
       - .:/usr/src/app
     environment:
       - NODE_ENV=develop
+    depends_on:
+          - "db"
     links:
           - "db:mongodb"
 

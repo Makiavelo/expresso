@@ -1,7 +1,7 @@
 'use strict';
 
 exports.search = (req, res) => {
-  res.json({});
+  res.json({hi:"world"});
 };
 
 exports.create = (req, res) => {
@@ -9,7 +9,7 @@ exports.create = (req, res) => {
   res.json({});
 };
 
-exports.update = (req, res) => {
+exports.edit = (req, res) => {
   //req.params.taskId, req.body
   res.json({});
 };

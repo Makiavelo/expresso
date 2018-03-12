@@ -1,14 +1,11 @@
 'use strict';
-module.exports = function(app) {
-  const controller = require('controller');
+const express = require('express')
+const router = express.Router()
+const controller = require('./controller');
 
-  app.route('/')
-    .post(controller.create);
+router.post('/', controller.create);
+router.get('/search', controller.search);
+router.put('/:id', controller.edit);
+router.delete('/:id', controller.delete);
 
-  app.route('/seach')
-    .get(controller.search);
-
-  app.route('/:id')
-    .put(controller.edit)
-    .delete(controller.delete);
-};
+module.exports = router;

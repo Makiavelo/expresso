@@ -1,7 +1,8 @@
 'use strict';
-module.exports = function(app) {
-  const controller = require('controller');
+const express = require('express')
+const router = express.Router()
+const controller = require('./controller');
 
-  app.route('/')
-    .post(controller.create);
-};
+router.post('/', controller.create);
+
+module.exports = router;
