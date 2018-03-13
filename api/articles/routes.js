@@ -8,4 +8,4 @@ router.get('/search', controller.search);
 router.put('/:id', controller.edit);
 router.delete('/:id', controller.delete);
 
-module.exports = router;
+module.exports = { "router": router, "docs": controller.apiDoc };

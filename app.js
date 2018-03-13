@@ -5,8 +5,19 @@ const userRoutes = require('./api/users/routes');
 
 const app = express();
 
-app.use('/article', articleRoutes);
-//app.use('/users', userRoutes);
+//load API routes
+app.use('/article', articleRoutes.router);
+app.use('/users', userRoutes);
+
+//load api swagger docs
+if(process.env.NODE_ENV !== "production") {
+  const swaggerUi = require('swagger-ui-express');
+  const docGen = require('./helpers/doc-generator');
+  const swaggerDocument = docGen.generateApiDocs([articleRoutes.docs]);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+}
+
+
 
 // catch 404 and forward to error handler
 /*app.use((req, res, next) => {

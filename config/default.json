@@ -1,0 +1,8 @@
+{
+  "db": {
+    "url": "mongodb://db/expresso"
+  },
+  "app": {
+    "port": 3000
+  }
+}
