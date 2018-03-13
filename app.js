@@ -7,13 +7,13 @@ const app = express();
 
 //load API routes
 app.use('/api/v1/article', articleRoutes.router);
-app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/user', userRoutes.router);
 
 //load api swagger docs
 if(process.env.NODE_ENV !== "production") {
   const swaggerUi = require('swagger-ui-express');
   const docGen = require('./helpers/doc-generator');
-  const swaggerDocument = docGen.generateApiDocs([articleRoutes.docs]);
+  const swaggerDocument = docGen.generateApiDocs([articleRoutes.docs, userRoutes.docs]);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 

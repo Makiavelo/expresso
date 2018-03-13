@@ -62,6 +62,21 @@ module.exports =  {
             }
           }
         },
+        "UserBody": {
+          "type": "object",
+          "required": [
+            "name",
+            "avatar"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            }
+          }
+        },
         "Article": {
           "type": "object",
           "required": [
@@ -84,7 +99,36 @@ module.exports =  {
               "type": "string"
             },
             "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+          }
+        },
+        "ArticleBody": {
+          "type": "object",
+          "required": [
+            "userId",
+            "title",
+            "text",
+            "tags"
+          ],
+          "properties": {
+            "userId": {
               "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
           }
         },
@@ -97,10 +141,12 @@ module.exports =  {
           ],
           "properties": {
             "error": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "code": {
-              "type": "integer"
+              "type": "integer",
+              "default": 200
             },
             "message": {
               "type": "string"

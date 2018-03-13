@@ -12,10 +12,11 @@ router.delete('/:id', controller.delete);
 let apiDoc = {};
 if(process.env.NODE_ENV !== "production") {
   apiDoc = {
-    "/articles": {
+    "/article": {
       "post": {
         "description": "Creates a new article",
         "operationId": "createArticle",
+        "tags": ["article"],
         "produces": [
           "application/json"
         ],
@@ -26,7 +27,7 @@ if(process.env.NODE_ENV !== "production") {
             "description": "The article",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Article"
+              "$ref": "#/definitions/ArticleBody"
             }
           }
         ],
@@ -46,10 +47,11 @@ if(process.env.NODE_ENV !== "production") {
         }
       }
     },
-    "/articles/{id}": {
+    "/article/{id}": {
       "put": {
         "description": "Updates an article",
         "operationId": "updateArticle",
+        "tags": ["article"],
         "produces": [
           "application/json"
         ],
@@ -67,7 +69,7 @@ if(process.env.NODE_ENV !== "production") {
             "description": "The updated article contents",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Article"
+              "$ref": "#/definitions/ArticleBody"
             }
           }
         ],
@@ -89,6 +91,7 @@ if(process.env.NODE_ENV !== "production") {
       "delete": {
         "description": "Deletes an article",
         "operationId": "deleteArticle",
+        "tags": ["article"],
         "produces": [
           "application/json"
         ],
@@ -116,7 +119,47 @@ if(process.env.NODE_ENV !== "production") {
           }
         }
       }
-    }
+    },
+    "/article/search": {
+      "get": {
+        "description": "Search articles",
+        "operationId": "searchArticles",
+        "tags": ["article"],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "tags to search by",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "csv"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article created succesfully",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Article"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/ResponseModel"
+            }
+          }
+        }
+      }
+    },
   };
 }
 
