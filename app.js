@@ -6,8 +6,8 @@ const userRoutes = require('./api/users/routes');
 const app = express();
 
 //load API routes
-app.use('/article', articleRoutes.router);
-app.use('/users', userRoutes);
+app.use('/api/v1/article', articleRoutes.router);
+app.use('/api/v1/users', userRoutes);
 
 //load api swagger docs
 if(process.env.NODE_ENV !== "production") {

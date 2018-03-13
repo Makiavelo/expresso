@@ -15,25 +15,36 @@ const http = require('http');
 app.set('port', config.get('app.port'));
 
 /**
+ * Check that the ENV var 'ACCESS_TOKEN' is created (Prevent empty access token vulnerability)
+ */
+if(!config.get('app.security.token')) {
+  console.error('ERROR: No security token defined, create the ENV variable called ACCESS_TOKEN');
+  process.exit(1);
+}
+
+/**
  * Create HTTP server.
  */
 debug('Building server on port '+config.get('app.port'));
 var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Connect to mongo and start listening on defined port.
+ * Using connection pooling: https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#mongoclient-connection-pooling
  */
 debug('Connecting to mongo...')
 mongodb.MongoClient.connect(config.get('db.url'))
   .then((db) => {
-    debug('Connected to mongo on: '+config.get('db.url'))
+    debug('Connected to mongo on: '+config.get('db.url'));
+    debug('Access token: '+config.get('app.security.token'));
     app.set('db', db);
     server.listen(config.get('app.port'));
     server.on('error', onError);
     server.on('listening', onListening);
   })
   .catch((error) => {
-    console.log(JSON.stringify(error, null, 2));
+    //output mongo error and kill server
+    console.error(JSON.stringify(error, null, 2));
     process.exit(1);
   });
 

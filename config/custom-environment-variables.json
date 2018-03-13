@@ -1,1 +1,7 @@
-{}
+{
+  "app": {
+    "security": {
+      "token": "ACCESS_TOKEN"
+    }
+  }
+}

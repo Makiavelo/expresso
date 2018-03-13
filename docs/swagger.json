@@ -169,49 +169,63 @@
     }
   },
   "definitions": {
-    "Pet": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/NewPet"
-        },
-        {
-          "required": [
-            "id"
-          ],
-          "properties": {
-            "id": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        }
-      ]
-    },
-    "NewPet": {
+    "User": {
       "type": "object",
       "required": [
-        "name"
+        "name",
+        "avatar"
       ],
       "properties": {
+        "_id": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
         },
-        "tag": {
+        "avatar": {
           "type": "string"
         }
       }
     },
-    "ErrorModel": {
+    "Article": {
       "type": "object",
       "required": [
+        "userId",
+        "title",
+        "text",
+        "tags"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "string"
+        },
+      }
+    },
+    "ResponseModel": {
+      "type": "object",
+      "required": [
+        "error",
         "code",
         "message"
       ],
       "properties": {
         "code": {
-          "type": "integer",
-          "format": "int32"
+          "type": "integer"
+        },
+        "code": {
+          "type": "integer"
         },
         "message": {
           "type": "string"

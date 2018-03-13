@@ -5,9 +5,6 @@
   "app": {
     "port": 3000,
     "host": "localhost",
-    "protocol": "http",
-    "security": {
-      "token": ""
-    }
+    "protocol": "http"
   }
 }

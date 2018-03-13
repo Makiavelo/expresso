@@ -1,4 +1,6 @@
 const _ = require('lodash');
+const config = require('config');
+const package = require('../package.json');
 
 module.exports =  {
   generateApiDocs: function(docs) {
@@ -12,21 +14,21 @@ module.exports =  {
     return {
       "swagger": "2.0",
       "info": {
-        "version": "1.0.0",
-        "title": "Swagger Petstore",
-        "description": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification",
-        "termsOfService": "http://swagger.io/terms/",
+        "version": package.version,
+        "title": package.name,
+        "description": package.description,
+        "termsOfService": package.homepage,
         "contact": {
-          "name": "Swagger API Team"
+          "name": package.author
         },
         "license": {
-          "name": "MIT"
+          "name": package.license
         }
       },
-      "host": "petstore.swagger.io",
-      "basePath": "/api",
+      "host": config.get('app.host')+':'+config.get('app.port'),
+      "basePath": "/api/v1",
       "schemes": [
-        "http"
+        config.get('app.protocol')
       ],
       "consumes": [
         "application/json"
@@ -34,50 +36,71 @@ module.exports =  {
       "produces": [
         "application/json"
       ],
+      "securityDefinitions": {
+        "APIKeyHeader": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "X-API-Key"
+        }
+      },
       "definitions": {
-        "Pet": {
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/NewPet"
-            },
-            {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          ]
-        },
-        "NewPet": {
+        "User": {
           "type": "object",
           "required": [
-            "name"
+            "name",
+            "avatar"
           ],
           "properties": {
+            "_id": {
+              "type": "string"
+            },
             "name": {
               "type": "string"
             },
-            "tag": {
+            "avatar": {
               "type": "string"
             }
           }
         },
-        "ErrorModel": {
+        "Article": {
           "type": "object",
           "required": [
+            "userId",
+            "title",
+            "text",
+            "tags"
+          ],
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "string"
+            },
+          }
+        },
+        "ResponseModel": {
+          "type": "object",
+          "required": [
+            "error",
             "code",
             "message"
           ],
           "properties": {
+            "error": {
+              "type": "boolean"
+            },
             "code": {
-              "type": "integer",
-              "format": "int32"
+              "type": "integer"
             },
             "message": {
               "type": "string"
