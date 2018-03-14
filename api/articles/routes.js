@@ -3,10 +3,10 @@ const express = require('express')
 const router = express.Router()
 const controller = require('./controller');
 
-router.post('/', controller.create);
-router.get('/search', controller.search);
-router.put('/:id', controller.edit);
-router.delete('/:id', controller.delete);
+router.post  ('/',       (req, res, next) => controller.create(req, res, next));
+router.put   ('/:id',    (req, res, next) => controller.edit(req, res, next));
+router.delete('/:id',    (req, res, next) => controller.delete(req, res, next));
+router.get   ('/search', (req, res, next) => controller.search(req, res, next));
 
 //Define api docs
 let apiDoc = {};

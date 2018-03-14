@@ -46,21 +46,29 @@ module.exports =  {
       "definitions": {
         "User": {
           "type": "object",
-          "required": [
-            "name",
-            "avatar"
-          ],
-          "properties": {
-            "_id": {
-              "type": "string"
+          "allOf": [
+            {
+              "$ref": '#/definitions/ResponseModel'
             },
-            "name": {
-              "type": "string"
-            },
-            "avatar": {
-              "type": "string"
+            {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             }
-          }
+          ],
         },
         "UserBody": {
           "type": "object",
@@ -79,32 +87,44 @@ module.exports =  {
         },
         "Article": {
           "type": "object",
+          "allOf": [
+            {
+              "$ref": '#/definitions/ResponseModel'
+            },
+            {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "userId": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                  }
+                }
+              }
+            }
+          ],
           "required": [
             "userId",
             "title",
             "text",
             "tags"
           ],
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "userId": {
-              "type": "string"
-            },
-            "title": {
-              "type": "string"
-            },
-            "text": {
-              "type": "string"
-            },
-            "tags": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-          }
         },
         "ArticleBody": {
           "type": "object",
@@ -134,22 +154,29 @@ module.exports =  {
         },
         "ResponseModel": {
           "type": "object",
+          "description": "Default API response",
           "required": [
-            "error",
-            "code",
-            "message"
+            "status",
+            "http_status",
+            "message",
+            "data"
           ],
           "properties": {
-            "error": {
-              "type": "boolean",
-              "default": false
+            "status": {
+              "type": "string",
+              "enum": ["ok", "error"],
+              "default": "error"
             },
-            "code": {
+            "http_status": {
               "type": "integer",
-              "default": 200
+              "default": 400
             },
             "message": {
-              "type": "string"
+              "type": "string",
+              "default": "validation failed"
+            },
+            "data": {
+              "type": "object"
             }
           }
         }

@@ -8,6 +8,7 @@ const mongodb = require('mongodb');
 const app = require('../app');
 const debug = require('debug')('express-app:server');
 const http = require('http');
+const dbService = require('../services/db');
 
 /**
  * Get port from environment and store in Express.
@@ -37,7 +38,7 @@ mongodb.MongoClient.connect(config.get('db.url'))
   .then((db) => {
     debug('Connected to mongo on: '+config.get('db.url'));
     debug('Access token: '+config.get('app.security.token'));
-    app.set('db', db);
+    dbService.setDb(db);
     server.listen(config.get('app.port'));
     server.on('error', onError);
     server.on('listening', onListening);
