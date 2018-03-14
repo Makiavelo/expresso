@@ -10,6 +10,13 @@ router.get   ('/search', (req, res, next) => controller.search(req, res, next));
 
 //Define api docs
 let apiDoc = {};
+let sample = {
+  "_id": "string",
+  "userId": "string",
+  "title": "string",
+  "text": "string",
+  "tags": ['string1', 'string2']
+};
 if(process.env.NODE_ENV !== "production") {
   apiDoc = {
     "/article": {
@@ -75,15 +82,17 @@ if(process.env.NODE_ENV !== "production") {
         ],
         "responses": {
           "200": {
-            "description": "Article created succesfully",
+            "description": "Article updated successfully",
             "schema": {
               "$ref": "#/definitions/Article"
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/ResponseModel"
+            },
+            "examples": {
+              "response": {
+                "status": "ok",
+                "http_status": "200",
+                "message": "success",
+                "data": sample
+              }
             }
           }
         }
@@ -109,12 +118,42 @@ if(process.env.NODE_ENV !== "production") {
             "description": "Article deleted successfully",
             "schema": {
               "$ref": "#/definitions/ResponseModel"
+            },
+            "examples": {
+              "response": {
+                "status": "ok",
+                "http_status": "200",
+                "message": "success",
+                "data": {}
+              }
             }
           },
-          "default": {
-            "description": "unexpected error",
+          "404": {
+            "description": "Article not found",
             "schema": {
               "$ref": "#/definitions/ResponseModel"
+            },
+            "examples": {
+              "response": {
+                "status": "error",
+                "http_status": "404",
+                "message": "fail",
+                "data": {}
+              }
+            }
+          },
+          "409": {
+            "description": "Article cannot be deleted",
+            "schema": {
+              "$ref": "#/definitions/ResponseModel"
+            },
+            "examples": {
+              "response": {
+                "status": "error",
+                "http_status": "409",
+                "message": "Article cannot be deleted",
+                "data": {}
+              }
             }
           }
         }
@@ -149,12 +188,6 @@ if(process.env.NODE_ENV !== "production") {
               "items": {
                 "$ref": "#/definitions/Article"
               }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "schema": {
-              "$ref": "#/definitions/ResponseModel"
             }
           }
         }

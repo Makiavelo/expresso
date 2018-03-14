@@ -152,6 +152,13 @@ module.exports =  {
             },
           }
         },
+        "ArticleSample": {
+          "_id": "string",
+          "userId": "string",
+          "title": "string",
+          "text": "string",
+          "tags": ['string1', 'string2']
+        },
         "ResponseModel": {
           "type": "object",
           "description": "Default API response",
