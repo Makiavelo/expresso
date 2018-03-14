@@ -30,6 +30,18 @@ class CustomWorld {
 
     return request(options);
   }
+
+  postArticle(body) {
+    const options = {
+      "method": "post",
+      "headers": { "X-API-Key": API_KEY },
+      "url": API_URL+"/api/v1/article",
+      "body": body,
+      "json": true
+    };
+
+    return request(options);
+  }
 }
 
 setWorldConstructor(CustomWorld);

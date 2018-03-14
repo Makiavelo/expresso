@@ -1,5 +1,4 @@
 const {Given, When, Then} = require('cucumber');
-const {expect} = require('chai');
 
 const VALID_USER = {
   "name": "test1",
