@@ -1,7 +1,9 @@
+@api @article @article_delete
 Feature: API user can delete articles
   As an API user
   I want to delete an article
 
+  @api_article_delete_valid
   Scenario: Delete an article
     Given An existing article id
     When I send the existing article id to the API endpoint

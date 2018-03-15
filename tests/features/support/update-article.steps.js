@@ -1,63 +1,101 @@
-const {Given, When, Then} = require('cucumber');
+const {Given, When, Then, Before, After} = require('cucumber');
 
-Given('A valid article exists', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+const VALID_ARTICLE = {
+  "userId": '',
+  "title": "Test article update",
+  "text": "test article update text",
+  "tags": ["tag1", "tag2", "tag3"]
+};
+
+const VALID_ARTICLE_UPDATE = {
+  "userId": '',
+  "title": "Updated title",
+  "text": "Updated text",
+  "tags": ["updated tag1", "updated tag2", "updated tag3"]
+};
+
+const VALID_USER = {
+  "name": "test article update",
+  "avatar": "http://myurl.com/image.jpg"
+};
+
+let articleUpdateResponse, articleInvalidUpdateResponse, articleNonExistentUpdateResponse, articleUpdateWrongUserResponse;
+
+Before({tags: "@api_valid_article_update"}, function() {
+  return this.postUser(VALID_USER)
+    .then((response) => {
+      VALID_USER["_id"] = response.data._id;
+      VALID_ARTICLE["userId"] = VALID_USER["_id"];
+      VALID_ARTICLE_UPDATE["userId"] = VALID_USER["_id"];
+    });
 });
 
-When('I send the valid article update to the API endpoint', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+Given('A valid article exists', function () {
+  return this.postArticle(VALID_ARTICLE)
+    .then((response) => {
+      VALID_ARTICLE["_id"] = response.data._id;
+      VALID_ARTICLE_UPDATE["_id"] = response.data._id;
+    });
 });
 
-Then('The article is updated', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+When('I send the valid article update to the API endpoint', function () {
+  return this.updateArticle(VALID_ARTICLE_UPDATE)
+    .then((response) => {
+      articleUpdateResponse = response;
+    });
 });
 
-Given('The valid article', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+Then('The article is updated', function () {
+  this.expect(articleUpdateResponse.http_status).to.equal(200);
 });
 
-When('I send the invalid article parameters to the API endpoint', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+Given('The valid article', function () {
+
 });
 
-Then('The article is not updated', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+When('I send the invalid article parameters to the API endpoint', function () {
+  const invalid_data = { "_id": VALID_ARTICLE["_id"] };
+  return this.updateArticle(invalid_data)
+    .then((response) => {
+      articleInvalidUpdateResponse = response;
+    });
+});
+
+Then('The article is not updated', function () {
+  this.expect(articleUpdateResponse.http_status).to.equal(400);
 });
 
 Given('A non existent article id', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+
 });
 
-When('I send the non existent article id to the API endpoint', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+When('I send the non existent article id to the API endpoint', function () {
+  const invalid_data = { "_id": "MADE_UP_ID" };
+  return this.updateArticle(invalid_data)
+    .then((response) => {
+      articleNonExistentUpdateResponse = response;
+    });
 });
 
 Then('I get a 404', function (int, callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+  this.expect(articleUpdateResponse.http_status).to.equal(404);
 });
 
-Given('A valid article id with an invalid user id', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+Given('A valid article id with an invalid user id', function () {
+
 });
 
-When('I send the article with invalid user id to the update API endpoint', function (callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+When('I send the article with invalid user id to the update API endpoint', function () {
+  const invalid_data = Object.assign({}, VALID_ARTICLE);
+  invalid_data["userId"] = "MADE_UP_ID";
+  return this.updateArticle(invalid_data)
+    .then((response) => {
+      articleUpdateWrongUserResponse = response;
+    });
 });
 
-Then('The article with invalid user id is not updated', function (int, callback) {
-  // Write code here that turns the phrase above into concrete actions
-  callback(null, 'pending');
+Then('The article with invalid user id is not updated', function () {
+  this.expect(articleUpdateResponse.http_status).to.equal(400);
 });
 
 

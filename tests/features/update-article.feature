@@ -1,7 +1,9 @@
+@api @article @article_update
 Feature: API user can update articles
   As an API user
   I want to update an article
 
+  @api_valid_article_update
   Scenario: Update an article
     Given A valid article exists
     When I send the valid article update to the API endpoint

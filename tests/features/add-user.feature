@@ -1,3 +1,4 @@
+@api @user
 Feature: API user can add users
   As an API user
   I want to add a user
