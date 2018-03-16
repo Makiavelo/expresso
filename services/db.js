@@ -12,7 +12,10 @@ class Database {
   }
 
   getDb() {
-    return this.client.db();
+    if(this.client) {
+      return this.client.db();
+    }
+    return false;
   }
 }
 

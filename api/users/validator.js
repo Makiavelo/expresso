@@ -6,12 +6,19 @@ class UserValidator {
   }
 
   validate(user) {
-    const schema = Joi.object().keys({
-      name: Joi.string().min(3).max(30).required(),
-      avatar: Joi.string().uri().required()
-    });
+    return new Promise((resolve, reject) => {
+      const schema = Joi.object().keys({
+        name: Joi.string().min(3).max(30).required(),
+        avatar: Joi.string().uri().required()
+      });
 
-    return Joi.validate(user.schema, schema);
+      let result = Joi.validate(user.schema, schema);
+      if(!result.error) {
+        resolve(result);
+      } else {
+        reject(result);
+      }
+    });
   }
 }
 

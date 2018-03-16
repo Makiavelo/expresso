@@ -36,11 +36,11 @@ class CustomWorld {
     return request(options);
   }
 
-  updateArticle(body) {
+  updateArticle(body, id) {
     const options = {
       "method": "put",
       "headers": { "X-API-Key": API_KEY },
-      "url": API_URL+"/api/v1/article"+body._id,
+      "url": API_URL+"/api/v1/article/"+id,
       "body": body,
       "json": true
     };

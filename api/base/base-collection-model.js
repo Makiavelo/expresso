@@ -4,7 +4,7 @@ class BaseCollectionModel {
   constructor(model, result) {
     this.collection = [];
     this.model = model;
-    this.load(result);
+    if(result) this.load(result);
   }
 
   load(result) {
@@ -15,6 +15,14 @@ class BaseCollectionModel {
         this.collection.push(instance);
       });
     }
+  }
+
+  getRaw() {
+    let rawCollection = [];
+    _.forEach(this.collection, (value) => {
+      rawCollection.push(value.schema);
+    });
+    return rawCollection;
   }
 }
 

@@ -32,11 +32,15 @@ Then('I don\'t get any results', function () {
   this.expect(emptySearchResponse.data).to.have.lengthOf(0);
 });
 
-When('I search with the following tags {string}', function (tags) {
-  return this.searchArticle(tags)
-    .then((response) => {
-      searchResponse = response;
-    });
+When('I search with the following tags {string}', function (tags, callback) {
+  let that = this;
+  setTimeout(function(){
+    that.searchArticle(tags)
+      .then(function (response) {
+        searchResponse = response;
+        callback();
+      });
+  }, 2000);
 });
 
 Then('I get {int} results', function (number) {

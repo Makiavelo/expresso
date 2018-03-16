@@ -17,7 +17,7 @@ class BaseApiController {
     return this.response(true, message, status, data);
   }
 
-  fail(message = "success",  status = 200, data = {}) {
+  fail(message = "error",  status = 400, data = {}) {
     return this.response(false, message, status, data);
   }
 }

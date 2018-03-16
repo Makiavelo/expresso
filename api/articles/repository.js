@@ -8,8 +8,20 @@ class ArticleRepository extends BaseRepository {
     this.collection = "articles";
   }
 
-  findByCrazyParams() {
+  findByTags(tags) {
+    const collection = this.db.collection(this.collection);
+    const query = {
+      tags: { $all: tags }
+    };
 
+    return collection
+      .find(query).toArray()
+      .then((results) => {
+        return new ArticleCollection(results);
+      })
+      .catch((err) => {
+        throw Error(err);
+      });
   }
 }
 

@@ -11,7 +11,7 @@ services:
       - .:/usr/src/app
     environment:
       - NODE_ENV=develop
-      - DEBUG=express-app:server,http
+      - DEBUG=express-app:server,http,controller
       - ACCESS_TOKEN=5CD4ED173E1C95FE763B753A297D5
     depends_on:
           - "db"

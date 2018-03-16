@@ -5,6 +5,10 @@ const userRoutes = require('./api/users/routes');
 
 const app = express();
 
+//Middleware
+app.use(express.json());
+app.use(express.urlencoded());
+
 //load API routes
 app.use('/api/v1/article', articleRoutes.router);
 app.use('/api/v1/user', userRoutes.router);

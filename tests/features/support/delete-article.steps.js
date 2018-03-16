@@ -52,6 +52,6 @@ When('I send the invalid article id to the API endpoint', function () {
 });
 
 Then('get a 404', function () {
-  this.expect(validDeleteResponse.http_status).to.equal(404);
+  this.expect(invalidDeleteResponse.http_status).to.equal(404);
 });
 

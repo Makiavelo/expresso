@@ -37,5 +37,5 @@ When('I send the invalid user to the API endpoint', function () {
 });
 
 Then('The user is not created', function () {
-  this.expect(postResponse.http_status).to.equal(400);
+  this.expect(invalidPostResponse.http_status).to.equal(400);
 });
