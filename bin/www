@@ -35,10 +35,10 @@ var server = http.createServer(app);
  */
 debug('Connecting to mongo...')
 mongodb.MongoClient.connect(config.get('db.url'))
-  .then((db) => {
+  .then((client) => {
     debug('Connected to mongo on: '+config.get('db.url'));
     debug('Access token: '+config.get('app.security.token'));
-    dbService.setDb(db);
+    dbService.setClient(client);
     server.listen(config.get('app.port'));
     server.on('error', onError);
     server.on('listening', onListening);

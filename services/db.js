@@ -1,14 +1,18 @@
 class Database {
   constructor() {
-    this.db;
+    this.client;
   }
 
-  setDb(db) {
-    this.db = db;
+  setClient(client) {
+    this.client = client;
+  }
+
+  getClient() {
+    return this.client;
   }
 
   getDb() {
-    return this.db;
+    return this.client.db();
   }
 }
 
