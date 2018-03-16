@@ -19,6 +19,7 @@ cd expresso
 ```
 3) run:
 ```
+npm install
 docker-compose up --build
 ```
 
