@@ -2,10 +2,13 @@ const express = require('express');
 
 const articleRoutes = require('./api/articles/routes');
 const userRoutes = require('./api/users/routes');
+const auth = require('./api/middleware/security/auth-controller');
+const errors = require('./api/middleware/handlers/errors-controller');
 
 const app = express();
 
 //Middleware
+app.use((req, res, next) => auth.check(req, res, next));
 app.use(express.json());
 app.use(express.urlencoded());
 
@@ -13,7 +16,7 @@ app.use(express.urlencoded());
 app.use('/api/v1/article', articleRoutes.router);
 app.use('/api/v1/user', userRoutes.router);
 
-//load api swagger docs
+//load api swagger docs if not on prod
 if(process.env.NODE_ENV !== "production") {
   const swaggerUi = require('swagger-ui-express');
   const docGen = require('./helpers/doc-generator');
@@ -21,21 +24,8 @@ if(process.env.NODE_ENV !== "production") {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
-
-
-// catch 404 and forward to error handler
-/*app.use((req, res, next) => {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});*/
-
-// error handler
-/*app.use((err, req, res, next) => {
-  // render the error page
-  console.log('ERROR HANDLLER');
-  res.status(err.status || 500);
-  res.json(err);
-});*/
+//Middleware for error handling
+app.use((req, res, next) => errors.notFound(req, res, next));
+app.use((req, res, next) => errors.handler(req, res, next));
 
 module.exports = app;
