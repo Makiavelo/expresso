@@ -8,7 +8,7 @@ class UserValidator {
   validate(user) {
     return new Promise((resolve, reject) => {
       const schema = Joi.object().keys({
-        name: Joi.string().min(3).max(30).required(),
+        name: Joi.string().required(),
         avatar: Joi.string().uri().required()
       });
 

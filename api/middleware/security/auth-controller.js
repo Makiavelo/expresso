@@ -9,10 +9,15 @@ class AuthController extends BaseApiController {
   }
 
   check(req, res, next) {
-    if(req.header('X-API-Key') === process.env.ACCESS_TOKEN) {
+    //allow access to docs if it's not production.
+    if(process.env.NODE_ENV !== "production" && req.path === "/api-docs/") {
       next();
     } else {
-      res.json(this.fail("Authentication required", 401));
+      if(req.header('X-API-Key') === process.env.ACCESS_TOKEN) {
+        next();
+      } else {
+        res.json(this.fail("Authentication required", 401));
+      }
     }
   }
 }

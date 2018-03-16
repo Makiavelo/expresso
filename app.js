@@ -8,7 +8,7 @@ const errors = require('./api/middleware/handlers/errors-controller');
 const app = express();
 
 //Middleware
-app.use((req, res, next) => auth.check(req, res, next));
+app.use('/api', (req, res, next) => auth.check(req, res, next));
 app.use(express.json());
 app.use(express.urlencoded());
 

@@ -1,0 +1,12 @@
+version: '3'
+services:
+  api:
+    container_name: node_api
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=production
+      - DEBUG=express-app:server
+      - ACCESS_TOKEN=5CD4ED173E1C95FE763B753A297D5

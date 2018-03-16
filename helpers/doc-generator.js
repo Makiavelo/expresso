@@ -36,13 +36,6 @@ module.exports =  {
       "produces": [
         "application/json"
       ],
-      "securityDefinitions": {
-        "APIKeyHeader": {
-          "type": "apiKey",
-          "in": "header",
-          "name": "X-API-Key"
-        }
-      },
       "definitions": {
         "User": {
           "type": "object",

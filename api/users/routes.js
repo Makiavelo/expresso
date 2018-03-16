@@ -2,6 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('./controller');
+const config = require('config');
 
 router.post('/', (req, res, next) => controller.create(req, res, next));
 
@@ -26,6 +27,13 @@ if(process.env.NODE_ENV !== "production") {
             "schema": {
               "$ref": "#/definitions/UserBody"
             }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "the access token",
+            "required": true,
+            "default": config.get('app.security.token')
           }
         ],
         "responses": {

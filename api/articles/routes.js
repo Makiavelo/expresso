@@ -2,6 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const controller = require('./controller');
+const config = require('config');
 
 router.post  ('/',       (req, res, next) => controller.create(req, res, next));
 router.put   ('/:id',    (req, res, next) => controller.edit(req, res, next));
@@ -36,6 +37,13 @@ if(process.env.NODE_ENV !== "production") {
             "schema": {
               "$ref": "#/definitions/ArticleBody"
             }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "the access token",
+            "required": true,
+            "default": config.get('app.security.token')
           }
         ],
         "responses": {
@@ -78,6 +86,13 @@ if(process.env.NODE_ENV !== "production") {
             "schema": {
               "$ref": "#/definitions/ArticleBody"
             }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "the access token",
+            "required": true,
+            "default": config.get('app.security.token')
           }
         ],
         "responses": {
@@ -111,6 +126,13 @@ if(process.env.NODE_ENV !== "production") {
             "description": "Article id",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "the access token",
+            "required": true,
+            "default": config.get('app.security.token')
           }
         ],
         "responses": {
@@ -178,6 +200,13 @@ if(process.env.NODE_ENV !== "production") {
               "type": "string"
             },
             "collectionFormat": "csv"
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "description": "the access token",
+            "required": true,
+            "default": config.get('app.security.token')
           }
         ],
         "responses": {

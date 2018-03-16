@@ -2,24 +2,11 @@ version: '3'
 services:
   api:
     container_name: node_api
-    build:
-      context: .
-      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=staging
       - DEBUG=express-app:server,http,controller
       - ACCESS_TOKEN=5CD4ED173E1C95FE763B753A297D5
-    depends_on:
-          - "db"
-    links:
-          - "db:mongodb"
-
-  db:
-    container_name: mongo
-    image: mongo
-    ports:
-      - "27017:27017"

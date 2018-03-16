@@ -10,9 +10,9 @@ class ArticleValidator {
   validate(params) {
     return new Promise((resolve, reject) => {
       const schema = Joi.object().keys({
-        userId: Joi.string().min(3).max(30).required(),
-        title: Joi.string().min(1).required(),
-        text: Joi.string().min(1).required(),
+        userId: Joi.string().required(),
+        title: Joi.string().required(),
+        text: Joi.string().required(),
         tags: Joi.array().required(),
       });
       const result = Joi.validate(params, schema);
