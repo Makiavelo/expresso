@@ -9,8 +9,6 @@ class AuthController extends BaseApiController {
   }
 
   check(req, res, next) {
-    console.log('======> token: '+config.get('app.security.token'))
-    console.log('======> AUTH CHECK!: X-API-Key = '+req.header('X-API-Key'));
     if(req.header('X-API-Key') === process.env.ACCESS_TOKEN) {
       next();
     } else {
