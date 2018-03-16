@@ -1,19 +1,22 @@
 var {AfterAll, BeforeAll} = require('cucumber');
-const exec = require('child_process').exec;
+const config = require('config');
+const MongoClient = require('mongodb').MongoClient;
 
-// Synchronous
-BeforeAll(function () {
-  const child = exec('mongo expresso --eval "db.getCollectionNames().forEach(function(n){db[n].remove({})});"',
-    (error, stdout, stderr) => {
-      if(stdout) console.log(`stdout: ${stdout}`);
-      if(stderr) console.log(`stderr: ${stderr}`);
-      if (error !== null) {
-        console.log(`exec error: ${error}`);
-      }
+BeforeAll(function (callback) {
+    const url = process.env.NODE_ENV ? config.get('db.url'):config.get('db.host_url');
+    MongoClient.connect(url, function(err, client) {
+      console.log("Connected successfully to server");
+
+      const db = client.db("expresso");
+      db.collection("users").remove();
+      db.collection("articles").remove();
+
+      callback();
+      client.close();
     });
 });
 
 // Asynchronous Promise
-AfterAll(function () {
-  //do required cleanup
-});
+/*AfterAll(function () {
+
+});*/

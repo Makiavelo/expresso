@@ -1,6 +1,7 @@
 {
   "db": {
-    "url": "mongodb://db/expresso"
+    "url": "mongodb://db/expresso",
+    "host_url": "mongodb://localhost/expresso"
   },
   "app": {
     "port": 3000,
